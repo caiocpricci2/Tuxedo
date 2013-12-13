@@ -1,0 +1,1 @@
+Note: This folder should contain view specific images only

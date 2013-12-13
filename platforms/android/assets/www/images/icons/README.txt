@@ -1,0 +1,1 @@
+Note: These should all be square icons , 100 x 100 is optimal

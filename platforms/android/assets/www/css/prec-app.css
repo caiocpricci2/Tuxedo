@@ -1,0 +1,600 @@
+/**********************************************************************/
+/****** CSS RESET, DONT TOUCH THIS OR YOU WILL BREAK EVERYTHING ******/
+/*********************************************************************/
+
+
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,img { 
+	margin:0;
+	padding:0;
+}
+
+/* see: http://learnlayout.com/box-sizing.html as to why */
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	font-style: none;
+	color:#762c83; /* the purple */
+}
+
+/* crucial to stop press hold events popping up native touch callouts */
+body{
+	-webkit-touch-callout: none;
+	-webkit-user-select:none;
+	-webkit-text-size-adjust:none;
+	background-color:#333;
+	font-family:"Futura W01 Medium";
+	color:#762c83; /* the purple */
+	background:url("../images/background/tile-purple.png") repeat;	
+	background-size:auto 12px;
+}
+
+input[type="button"]{
+	background-color:#2fa7a5;
+	background: -webkit-gradient(linear, left top, left bottom, from(#2fa7a5), to(#2fa7a5));
+}
+
+
+
+.bold{
+	font-weight:bold;
+}
+
+.centerDiv{
+	margin: 0 auto;
+
+}
+
+.centerText{
+	text-align:center;
+}
+
+.ellipsis{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* hr class to solve height issues with standard <hr> */
+.hr
+{
+	border:none;
+	height:2px;
+	background-image:url("../images/background/hr.jpg");
+	background-position:0 bottom;
+	background-repeat:repeat-x;
+	background-size:5px 2px;
+	-o-background-size: 5px 2px;
+	-webkit-background-size: 5px 2px;
+	-khtml-background-size:5px 2px;
+	-moz-background-size: 5px 2px;
+}
+
+
+
+/* disables any default ( orange box) highlight in Phonegap on android */
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);	
+}
+
+/* specific for zoomable image content quality */
+.hiResImage{
+	-webkit-transform:translate3d(0,0,0);
+}
+
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+fieldset,img { 
+	border:0;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var {
+	font-style:normal;
+	font-weight:normal;
+}
+
+/* ############################################################################# */
+/*                       @FONT FACE DECLARATIONS - must be otf or ttf            */
+/* ############################################################################# */
+
+@font-face {
+	font-family: 'Futura W01 Medium';
+	src: url('../fonts/futura-medium-latin-1.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Ziggurat-HTF-Black';
+	src: url('../fonts/Ziggurat-HTF-Black.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Ziggurat-HTF-Black-Italic';
+	src: url('../fonts/Ziggurat-HTF-Black-Italic.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'URWEgyptienneTOT-Reg';
+	src: url('../fonts/URWEgyptienneTOT-Reg.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/**********************************************/
+/** Things that you probably will not change **/
+/**********************************************/
+
+#darkOverlay{
+	z-index:10; /* above everything */
+	background-color:#333;
+	opacity:0.8;
+	width:100%;
+	height:100%;
+	position: absolute;	
+	top:0;
+	left:0;
+	display:none;
+}
+
+
+/** DRILLDOWN **/
+.drillDown{
+	position:absolute;
+	top:0px;
+	width:100%;
+}
+
+.iScrollWrapper {
+	z-index:1;
+	position:absolute; 
+	left:0;
+	width:100%;
+	background:transparent;
+	overflow:none; /* critical for Android 4+ that this is "none" otherwise you can side swipe content in a bad way!*//*auto;*/
+}
+
+.ui_scroll_view{
+	/*top:0;
+	position:relative;	*/
+	display:block;
+		
+}
+
+/** this makes it run lists like jelly ( which is bad ) **/
+/*
+.ui_scroll_view *{
+	-webkit-transform:translate3d(0,0,0);
+}
+*/
+
+/** WRAP STUFF **/
+.content_wrap{position:relative;margin:0 auto;width:90%;padding:8px 0;clear:both;}
+.full_wrap{margin:0 auto;width:100%;}
+
+
+/**clearFix**/
+.clearFix{
+	clear:both;
+}
+
+/****************************************/
+/** Things that you might need to edit **/
+/****************************************/	
+.iScrollWrapper {
+	bottom:0px; /* this value will need to change to equal your TOOLBAR height */
+}
+
+/** HEADER **/
+#header {
+	z-index:25;
+	width:100%;
+	height:42px;
+	position:relative;
+	top:0px;
+	margin:0px;		
+    overflow:hidden;
+	padding:0px;
+	color:#fff;
+	font-size:1.0em;
+	text-align:center;
+	font-weight:bold;
+	/*background:transparent;
+	background:url("../images/header/header-bg.png") repeat-x;	*/
+	background-size:auto 42px;
+	display:none;
+}
+
+#headerTitle{
+	position:absolute;
+	top:0px;
+	left:12.5%;
+	right:12.5%;
+	width:75%;
+	height:100%;
+	margin:0 auto;
+	
+	color:#ffffff;
+	font-family:"Futura W01 Medium";
+}
+
+#headerImg{
+	height:50px;	
+	width:50px;
+	margin:0 auto;	
+}
+
+#headerImg img{
+	height:100%;
+	width:100%;
+		
+}
+
+#header .right{	
+	display:none;
+	position:absolute;
+	top:2px;
+	right:2px;	
+	
+	background:url("../images/header/header-icon-right.png") no-repeat 0px 0px;	
+	background-size:50px 50px;
+	-o-background-size: 50px 50px;
+	-webkit-background-size: 50px 50px;
+	-khtml-background-size: 50px 50px;
+	-moz-background-size: 50px 50px;
+}
+
+#header .left{	
+	display:none;
+	position:absolute;
+	top:0px;
+	left:0px;	
+	/*
+	background:transparent url("../images/header/header-icon-left.png") no-repeat 0px 0px;	
+	background-size:35px 35px;
+	-o-background-size: 35px 35px;
+	-webkit-background-size: 35px 35px;
+	-khtml-background-size: 35px 35px;
+	-moz-background-size: 35px 35px;
+	*/
+}
+
+
+/*Dropdown for the header. Needs to include the specific html and css. 
+ * To define the height go to PrecAppComponents.pxToSlide
+ */
+ 
+.headerDropDown {
+	position:relative;	
+	margin: 0 auto;
+	height:0px;
+	width:100%;		
+	text-align: left;
+	padding: 0;
+	transition:height 0.5s;
+	-webkit-transition:height 0.5s;
+	overflow: hidden;
+	z-index:50;
+}
+
+/************ End header ********/
+
+/** UI TOOLBAR **/
+/*********** Begin toolbar ******/
+#toolbar {
+	z-index:4 ;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%; /* 200px */
+	height: 105px;
+	/*background: url('../images/toolbar/toolbar-bg.png') repeat-x 0 0;*/
+	padding: 0;
+	margin:0;
+	overflow:hidden;
+}
+
+
+#toolbar_wrap {
+	float: left;
+	width: 100%;
+	height:100%;
+	/*margin: 0 auto;*/
+	overflow: hidden;
+	
+}
+
+#toolbar_items {
+	float: left;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+
+}
+
+#toolbar_items .toolbar_item {
+	float: left;
+	width: 25%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	overflow:hidden;
+}
+
+/* toolbar icon internals */
+
+/* this defines the style of the background highlight behind your toolbar icons in the acitve state */
+#toolbar_items .toolbar_item.active
+{
+	background:rgba(36,225,225,0.25);
+}
+
+#toolbar_items .toolbar_item.active .icon a {
+	background-position: center -50px;
+}
+
+#toolbar_items .toolbar_item .icon{
+	width:100%;
+	height:100%;
+}
+
+#toolbar_items .toolbar_item .icon a {
+	float:left;
+	width: 100%;
+	height: 100%;
+	
+	background-position: center 0px;
+	background-repeat: no-repeat;
+	
+	/* note this accomodates 160x 200 retina display icons */
+	-o-background-size: 80px 100px;
+	-webkit-background-size: 80px 100px;
+	-khtml-background-size: 80px 100px;
+	-moz-background-size: 80px 100px;
+	background-size: 80px 100px;
+}
+
+/* up to 5 icons */
+#toolbar_items .toolbar_item .icon.A a {
+	background-image: url('../images/toolbar/toolbar-item-a.png');
+}
+#toolbar_items .toolbar_item .icon.B a {
+	background-image: url('../images/toolbar/toolbar-item-b.png');
+}
+#toolbar_items .toolbar_item .icon.C a {
+	background-image: url('../images/toolbar/toolbar-item-c.png');
+}
+#toolbar_items .toolbar_item .icon.D a {
+	background-image: url('../images/toolbar/toolbar-item-d.png');
+}
+#toolbar_items .toolbar_item .icon.E a {
+	background-image: url('../images/toolbar/toolbar-item-e.png');
+}
+
+
+/*Text in the toolbar button*/
+
+
+/*********** End toolbar ********/
+
+
+/********** Carousel begin******/
+#hCarouselContainer{		
+	margin: 0 auto;
+
+}
+
+#carousel{
+
+}
+
+.carouselItem{
+	float:left;			
+}
+
+.carouselItem p{
+	float:left;
+}
+.carouselItem img{
+	margin:5px;
+	float:left;
+}
+
+#pager{
+	margin: 0 auto 0;
+}
+
+#pager .carouselDot{
+	position:relative;
+	float:left;
+	background:transparent url("../images/cells/cell-radio-selected.png");
+	background-size: 50px 50px;
+}
+
+#pager .selected{
+	background:transparent url("../images/cells/cell-radio.png");
+	background-size: 50px 50px;
+}
+
+/***************** Carousel End *********/
+
+/************ List Begin **************/
+
+
+.listItem{
+	position:relative;
+}
+
+
+
+/************ List End ***************/
+
+
+/********** PopOver *************/
+/** POP OVER **/
+#popOver{
+	z-index:200;
+	position:absolute;
+	top:0px;
+	width:100%;
+	height:100%;
+	display:none;
+}
+
+#popOverBG{ 
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	background:#333;
+	opacity:0.5;
+	
+}
+
+/* see PrecAppComponents.setPopOverStyleA / B for overrides*/
+#popOverPanel{
+	position:absolute;
+	left:4%;
+	width:92%;
+	height:73%;/*81%; /* 80% */
+	top:120px;
+	background:#fff;
+	border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;
+	z-index:202;	
+	border:1px #c0c0c0 solid;
+}
+
+#popOverClose{
+	position:absolute;
+	width:50px;
+	height:50px;
+	top: 0px;
+	right: 0px;
+	background:url('../images/icons/icon-close-popover.png') no-repeat 0px 0px;
+	background-size: 50px 50px;
+}
+
+/***** MENU NAVG ITEM ****/
+
+#scrollRevealMenu{
+	background:#141414;
+	opacity:1;
+	height:100%;
+	width:100%;
+}
+
+
+
+#revealMenu{
+	z-index:3; /* below the toolbar & header */
+	margin:0 auto;
+	padding:0px;	
+}
+
+.menuNavgItem{
+	width:100%;
+	min-width:150px;
+	min-height:40px;
+	height:8%;
+	line-height:40px;
+	display:block;	
+	/*padding-top:5px;
+	padding-bottom:5px;*/
+	font-size:20px;
+}
+
+.menuNavgItem .text{
+
+	width:70%;
+	float:left;
+	padding-left:40px;
+	background:transparent url('../images/icons/icon-circle.png') no-repeat 0 center;
+	background-size:35px 35px;
+	color:#fff;
+	
+}
+
+.menuNavgItem.untouched{
+
+	background:transparent;
+}
+
+.menuNavgItem.touched{
+
+	background:rgba(27, 189, 201, 0.5);
+}
+
+
+.menuNavgItem .icon{
+	clear:left;
+	float: left;
+	padding-left: 0px;
+	width: 40px;
+	height: 40px;
+	vertical-align:middle;
+}
+
+.menuNavgItem img{
+	/*width: 10px;
+	height: 10px;	
+	text-align:center;	
+	padding-right:10px;
+	vertical-align:middle;*/
+}
+
+
+.menuNavgItem.last{
+
+}
+
+
+/**************************************************/
+
+.textFieldReplacer{
+	background: #fff;	
+	border-radius: 5px;
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;		
+}
+
+
+.replacerTextArea{
+	color: black;
+	line-height: 20px;
+	font-size: 1.2em;
+	width: 100%;
+	overflow: hidden;
+	display: block;
+}
+
+.replacerText{
+	color: black;
+	line-height: 40px;
+	font-size: 1.2em;
+	width: 100%;
+	overflow: hidden;
+	display: block;
+}
+
+.touched{
+	opacity: 0.5;
+}
+
+
+

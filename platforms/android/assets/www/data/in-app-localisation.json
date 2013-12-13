@@ -1,0 +1,153 @@
+[
+      {
+         "Id":1,
+         "Name":"English",
+         "LanguageCode":"EN",
+         "Strings":[
+			{
+				"Name":"LOADING",
+				"Value":"LOADING..."
+			},
+			{
+				"Name":"FIND_A_SERVICE",
+				"Value":"FIND A SERVICE"
+			},
+			{
+				"Name":"FAVORITES",
+				"Value":"FAVORITES"
+			},
+			{
+				"Name":"ABOUT",
+				"Value":"ABOUT"
+			},
+			{
+				"Name":"IM_LOOKING_FOR",
+				"Value":"I'm looking for ..."
+			},
+			{
+				"Name":"LOCATION",
+				"Value":"Location"
+			},
+			{
+				"Name":"OR",
+				"Value":"or"
+			},
+			{
+				"Name":"WITHIN_X_OF_CURRENT",
+				"Value":"within 5km of my location"
+			},
+			{
+				"Name":"WE_PROVIDE",
+				"Value":"We provide..."
+			},
+			{
+				"Name":"YRS",
+				"Value":"yrs"
+			},
+			{
+				"Name":"YOU_WILL_NEED",
+				"Value":"You will need"
+			},
+			{
+				"Name":"RELATED_SERVICES",
+				"Value":"Related services"
+			},
+			{
+				"Name":"CALL_US_NOW",
+				"Value":"Call us now"
+			},
+			{
+				"Name":"RESULTS",
+				"Value":"RESULTS"
+			},
+			{
+				"Name":"WE_ARE_OPEN",
+				"Value":"We are open..."
+			},
+			{
+				"Name":"GET_IN_TOUCH",
+				"Value":"Get in touch"
+			},
+			{
+				"Name":"CONNECT_WITH_US",
+				"Value":"Connect with us"
+			},
+			{
+				"Name":"FOLLOW_US",
+				"Value":"Follow us"
+			},
+			{
+				"Name":"LIKE_US",
+				"Value":"Like us"
+			},
+			{
+				"Name":"ADD_TO_FAVORITES",
+				"Value":"Add to favorites"
+			},
+			{
+				"Name":"FOR_AGES",
+				"Value":"For ages"
+			},
+			{
+				"Name":"FROM_CURRENT_LOCATION",
+				"Value":"from current location"
+			},
+			{
+				"Name":"CATEGORIES",
+				"Value":"Categories"
+			},
+			{
+				"Name":"REMOVE_FROM_FAVORITES",
+				"Value":"Remove from favorites?"
+			},
+			{
+				"Name":"OKAY",
+				"Value":"Okay"
+			},
+			{
+				"Name":"CANCEL",
+				"Value":"Cancel"
+			},
+			{
+				"Name":"TRY_AGAIN",
+				"Value":"Please try again!"
+			},
+			{
+				"Name":"PLEASE_INPUT_AT_LEAST_ONE_KEYWORD",
+				"Value":"To pl!ng please type what you are looking for."
+			},
+			{
+				"Name":"GETTING_LOCATION",
+				"Value":"Finding location..."
+			},
+			{
+				"Name":"COULD_NOT_GET_YOUR_LOCATION",
+				"Value":"Could not get your location"
+			},
+			{
+				"Name":"SHARE_SERVICE",
+				"Value":"Share service"
+			},
+			{
+				"Name":"SHARE_BY_METHOD",
+				"Value":"Share details by:"
+			},
+			{
+				"Name":"ABOUT_NOT_AVAILABLE",
+				"Value":"About not currently available"
+			},
+			{			
+				"Name":"PROBLEM_WITH_YOUR_INTERNET_CONNECTION_OR_WITH_OUR_SERVERS",
+				"Value":"There seems to be a connection problem. We'll keep trying to get updates while you are using the app."
+			},{
+				"Name":"ERROR_NEW_SERVICES",
+				"Value":"Unable to retrieve new services"
+			},{
+				"Name":"COST",
+				"Value":"Cost"
+			}
+			
+			
+         ]
+      }
+]

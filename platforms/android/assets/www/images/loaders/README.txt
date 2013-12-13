@@ -1,0 +1,1 @@
+Note: These loader items should be used whenever there is potential for latency in the app

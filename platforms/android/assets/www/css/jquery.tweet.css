@@ -1,0 +1,82 @@
+.tweet,
+.query {
+	font: 120% Georgia, serif;
+	color: #085258;
+	
+}
+
+	.tweet_list {
+		-webkit-border-radius: 0.5em;
+		-moz-border-radius: 0.5em;
+		border-radius: 0.5em;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		overflow-y: hidden;
+		background-color: rgba(0,0,0, 0.5);
+	}
+	
+	.tweet_list .tweet_even {
+		/*background-color: rgba(0,0,0, 0.5);*/
+	}
+	
+	.tweet_list .tweet_first {
+		
+	}
+	
+	.tweet_list .tweet_last {
+		
+			-moz-border-image:none;
+			-webkit-border-image:none;
+			-o-border-image:none;
+			border-image:none;
+		
+	}
+	
+	
+		.tweet_list .awesome,
+		.tweet_list .epic {
+			text-transform: uppercase;
+		}
+		
+		.tweet_list li {
+			
+			margin: 0 auto;
+
+			
+			overflow-y: auto;
+			overflow-x: hidden;
+			/*padding: 1em 0px 1em 2%;*/
+			
+			padding: 0.75em 0;
+			width:90%;
+			list-style-type: none;
+			
+			-moz-border-image:url("../images/cells/hr.jpg") 0 0 30 0 round; /* Old Firefox */
+			-webkit-border-image:url("../images/cells/hr.jpg") 0 0 30 0  round; /* Safari */
+			-o-border-image:url("../images/cells/hr.jpg") 0 0 30 0  round; /* Opera */
+			border-image:url("../images/cells/hr.jpg") 0 0 30 0  round;
+			
+			/*border-bottom:solid 1px #333333;*/
+		
+			/*margin:0px 0px 0px 0px;
+            border-top:dotted 1px #333333;*/
+	
+		}
+		
+
+		
+		.tweet_list li a {
+			color: #fff;
+		}
+	
+	
+		
+		.tweet_list .tweet_avatar {
+			 padding-right: .5em;
+			 float: left;
+		}
+		
+			.tweet_list .tweet_avatar img {
+				vertical-align: middle;
+			}

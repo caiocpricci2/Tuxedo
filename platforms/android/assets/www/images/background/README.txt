@@ -1,0 +1,1 @@
+Note: This folder should contain all the required background images / tiles for your app

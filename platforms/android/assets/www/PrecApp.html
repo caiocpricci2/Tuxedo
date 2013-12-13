@@ -1,0 +1,736 @@
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <title>Prec App</title>
+
+        <link rel="stylesheet" type="text/css" href="css/prec-app.css">
+        <link rel="stylesheet" type="text/css" href="css/app.css">
+
+        <!-- !important , note only title the alternative stylesheets !! -->
+        <link rel="alternate stylesheet" type="text/css" href="css/tablet-app.css" title="tablet">
+        <link rel="stylesheet" type="text/css" href="css/toastr.css">
+
+        <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.animate-enhanced.js"></script>
+        <script type="text/javascript" src="js/jquery.dotdotdot-1.5.6-packed.js"></script>
+        <script type="text/javascript" src="js/iscroll-4.1.9.js"></script>
+
+        <script type="text/javascript" src="js/prec-app-nugget.js"></script>
+        <script type="text/javascript" src="js/prec-app-utils.js"></script>
+        <script type="text/javascript" src="js/prec-app-1.0.js"></script>
+        <script type="text/javascript" src="js/prec-app-components.js"></script>
+        
+
+        <script type="text/javascript" src="js/list.js"></script>
+        <script type="text/javascript" src="js/carousel.js"></script>
+
+        <script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery.tweet.js" ></script>
+        <script type="text/javascript" src="js/localisation.js"></script>
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.7&sensor=true"></script>
+        <script type="text/javascript" src="js/markerclusterer.js"></script>
+        <script type="text/javascript" src="js/GeocoderToolkitA.js"></script>
+        <script type="text/javascript" src="js/GeocoderToolkitB.js"></script>        
+        <script type="text/javascript" src="js/toastr.js"></script>
+        <script type="text/javascript" src="js/fuzzyset.js"></script>
+        
+
+        <!-- ****** LOAD YOUR APP SPECIFIC JS HERE  ***** -->
+        <script type="text/javascript" src="js/YACWAApp.js"></script>	
+        <!-- <script src="http://10.4.0.33:1234/target/target-script-min.js"></script>-->	
+	
+        <script>
+
+			var FILTER_TOGGLE_OPEN=true;
+			var FILTER_WIDGET_METRICS;
+			var CURRENT_FILTER_NID=0;
+			
+            function docReady() {
+                //horizontally & vertically center the loader
+                var holder = $("#loaderHolder");
+                var yPos = 55 + (PrecApp.AVAILABLE_SCROLL_H - holder.height()) / 2;
+                
+                holder.css({
+                    top : yPos,
+                    opacity : 1
+                });
+                
+                	// note - iOS 7 render pipeline requires CLICK !!!!
+                   var circle = document.getElementById("centreNavgCircle");
+                   circle.addEventListener("click",function(){PrecApp.handleClick('YACWAApp.toggleNavigation()')});
+                   //circle.addEventListener("mousedown",function(){PrecApp.handleClick('YACWAApp.toggleNavigation()')});
+                   
+					
+					var circleA = document.getElementById("navgCircleA");
+
+                   circleA.addEventListener("click",function(){PrecApp.handleClick('YACWAApp.navigateTo(0)')});
+                   //circleA.addEventListener("mousedown",function(){PrecApp.handleClick('YACWAApp.navigateTo(0)')});
+                   var circleB = document.getElementById("navgCircleB");
+                   circleB.addEventListener("click",function(){PrecApp.handleClick('YACWAApp.navigateTo(1)')});
+                   //circleB.addEventListener("mouseDown",function(){PrecApp.handleClick('YACWAApp.navigateTo(1)')});
+                   var circleC = document.getElementById("navgCircleC");
+                   circleC.addEventListener("click",function(){PrecApp.handleClick('YACWAApp.navigateTo(2)')});
+                   //circleC.addEventListener("mousedown",function(){PrecApp.handleClick('YACWAApp.navigateTo(2)')});
+                   
+                   
+                   var filterCircle = document.getElementById("filterCircle");
+                   filterCircle.addEventListener("touchstart",function(){PrecApp.handleClick('toggleFilter()')});
+                  // filterCircle.addEventListener("mousedown",function(){PrecApp.handleClick('toggleFilter()')});
+                   var filterSubCircleA = document.getElementById("filterSubCircleA");
+                   filterSubCircleA.addEventListener("touchstart",function(){PrecApp.handleClick('selectFilter(0)')});
+                   //filterSubCircleA.addEventListener("mousedown",function(){PrecApp.handleClick('selectFilter(0)')});
+                   var filterSubCircleB = document.getElementById("filterSubCircleB");
+                   filterSubCircleB.addEventListener("touchstart",function(){PrecApp.handleClick('selectFilter(1)')});
+                  // filterSubCircleB.addEventListener("mousedown",function(){PrecApp.handleClick('selectFilter(1)')});
+                   var filterSubCircleC = document.getElementById("filterSubCircleC");
+                   filterSubCircleC.addEventListener("touchstart",function(){PrecApp.handleClick('selectFilter(2)')});
+                   //filterSubCircleC.addEventListener("mousedown",function(){PrecApp.handleClick('selectFilter(2)')});
+                              
+                   
+           }
+			
+			// state machine in here depending on pageURL
+			function pageRequested(pageURL, pageLoadState)
+			{
+				var alias = "";
+				//alert("pageRequested:"+pageURL)
+				switch(pageURL)
+				{
+					case "page_A_0.html":
+						alias = "Home";
+						$("#filterWidget").css({"display":"none"});
+						break;					
+					case "page_C_0.html":
+						alias = "About";
+						$("#filterWidget").css({"display":"none"});
+						break;
+					case "page_A_0_tablet.html":
+						alias = "Home";
+						$("#filterWidget").css({"display":"none"});
+						break;
+					case "single_service.html":
+						alias = "Single_Service";
+							$("#filterWidget").css({"display":"none"});
+							break;					
+					case "page_B_0.html":
+						alias = "Favourites";
+						if (pageLoadState==PrecApp.PAGE_LOAD_STATES.goingBack)
+							$("#filterWidget").css({"display":"block"});
+						break;
+					case "services_list.html":
+						alias = "Services_List";
+						if (pageLoadState==PrecApp.PAGE_LOAD_STATES.goingBack)
+							$("#filterWidget").css({"display":"block"});
+					break;	
+				}
+				Nugget.trackPage(alias,pageLoadState);
+			}
+			
+			function showFilter(show)
+			{
+				if (!show)
+				{
+					$("#filterWidget").css({"display":"none"});
+				}
+				else
+				{
+					$("#filterWidget").css({"display":"block"});
+
+					if (FILTER_WIDGET_METRICS==null) // then define the metrics
+					{
+						var posA = $("#filterSubCircleA").position();
+				      	var posB = $("#filterSubCircleB").position();
+				      	var posC = $("#filterSubCircleC").position();
+
+						FILTER_WIDGET_METRICS=[
+								{
+									expanded : {
+									l : posA.left,
+									t : posA.top
+									}
+								},
+								{
+									expanded : {
+									l : posB.left,
+									t : posB.top
+									}
+								},
+								{
+									expanded : {
+									l : posC.left,
+									t : posC.top
+									}
+								}
+						];
+
+						toggleFilter();
+					}
+				}
+			}
+			
+		function headerRightButtonPressed(e)  {
+			
+				PrecApp.BLOCK_TOGGLE_OVERLAY = true;
+				var rightButton = document.getElementById('rightButton');
+				rightButton.addEventListener("webkitAnimationEnd",function(){
+							rightButton.classList.remove("crisisSproing");
+							YACWAApp.showEmergencyServices();
+				});					
+				rightButton.classList.add("crisisSproing");
+				
+										
+				e.stopPropagation();
+				e.preventDefault();
+				setTimeout(function(){
+						
+				setTimeout(function(){PrecApp.BLOCK_TOGGLE_OVERLAY = false;},500);
+					
+				},200);
+				return false;
+			}
+			
+			function toggleFilter()
+			{
+				$("#filterCircle").css({"zIndex":5});
+
+				FILTER_TOGGLE_OPEN=!FILTER_TOGGLE_OPEN;
+
+
+				//alert("FILTER_TOGGLE_OPEN:"+FILTER_WIDGET_METRICS[0].expanded.l);
+
+				var posA_left = 44;
+				var posA_top = 0;
+				var posB_left = 44;
+				var posB_top = 0;
+				var posC_left = 44;
+				var posC_top = 0;
+				
+				var bg_top=-225;
+
+				if (FILTER_TOGGLE_OPEN)
+				{
+					posA_left = FILTER_WIDGET_METRICS[0].expanded.l;
+					posA_top = FILTER_WIDGET_METRICS[0].expanded.t;
+
+					posB_left = FILTER_WIDGET_METRICS[1].expanded.l;
+					posB_top = FILTER_WIDGET_METRICS[1].expanded.t;
+
+					posC_left = FILTER_WIDGET_METRICS[2].expanded.l;
+					posC_top = FILTER_WIDGET_METRICS[2].expanded.t;
+					
+					bg_top=0;
+				}
+
+				// run the animation
+				d = PrecApp.ANIM_DURATION; // long animation
+				
+				
+				if (!PrecApp.IS_TABLET)
+				{
+					
+					$("#filterWidget .bg").animate({
+						"top" : bg_top,
+						useTranslate3d : true,
+						leaveTransforms : false
+					}, {
+						queue : false,
+						duration : d,
+						easing : PrecApp.ANIM_EASING,
+						complete : null
+					});
+				}
+
+				$("#filterSubCircleA").animate({
+					"left" : posA_left,
+					"top" : posA_top,
+					useTranslate3d : true,
+					leaveTransforms : false
+				}, {
+					queue : false,
+					duration : d,
+					easing : PrecApp.ANIM_EASING,
+					complete : null
+				});
+
+				$("#filterSubCircleB").animate({
+					"left" : posB_left,
+					"top" : posB_top,
+					useTranslate3d : true,
+					leaveTransforms : false
+				}, {
+					queue : false,
+					duration : d,
+					easing : PrecApp.ANIM_EASING,
+					complete : null
+				});
+
+				$("#filterSubCircleC").animate({
+					"left" : posC_left,
+					"top" : posC_top,
+					useTranslate3d : true,
+					leaveTransforms : false
+				}, {
+					queue : false,
+					duration : d,
+					easing : PrecApp.ANIM_EASING,
+					complete : setFilterCircleZIndex
+				});
+			}
+
+			function setFilterCircleZIndex()
+			{
+				if (FILTER_TOGGLE_OPEN)
+				{
+					$("#filterCircle").css({"zIndex":1});
+				}
+				else
+				{
+					$("#filterCircle").css({"zIndex":5});
+				}
+			}
+			
+			function highlightFilterIcon(index)
+			{
+				CURRENT_FILTER_NID=index;
+				
+				$(".listFilter").removeClass("selected");
+				$(".listFilter")[index].classList.add("selected");
+			}
+			
+            //triggered when we exit the native layer after opening a URL
+            function backFromNativeURLOpen() {
+                $("#header .right").show();
+            }
+
+			/** Some page_A common funcs **/
+		    function checkBoxA0() 
+			{
+		        var checkbox = $("#checkBoxA0");
+
+		        if (checkbox.hasClass('on')) 
+				{
+		            checkbox.removeClass('on');
+		            checkbox.addClass('off');
+					$("#tfB_A_0").addClass('colorB');
+					$("#tfB_A_0").removeClass('colorD');
+		        } 
+				else 
+				{
+		            checkbox.removeClass('off');
+		            checkbox.addClass('on');
+					$("#tfB_A_0").removeClass('colorB');
+					$("#tfB_A_0").addClass('colorD');
+		        }
+		    }
+		
+		
+			function pageA_findAService() 
+			{    
+		        if ($("#checkBoxA0").hasClass('on')) 
+				{
+		            PrecAppComponents.setPopOverStyleLoader(Localisation.getStr("GETTING_LOCATION"));
+		            PrecAppComponents.openPopOver();
+		            PrecAppUtils.getUserLocation(pageA_gotLocation, pageA_errorLocation);
+		        } 
+				else 
+				{
+		            var keywordsA = $("#tfA_A_0").val().split(" ");
+			        var keywordsB = $("#tfB_A_0").val().split(" ");
+
+			        if (PrecAppUtils.isNull(keywordsA) && PrecAppUtils.isNull(keywordsB)) 
+					{
+			            navigator.notification.alert(Localisation.getStr("PLEASE_INPUT_AT_LEAST_ONE_KEYWORD"), // message
+			            null, // callback
+			            Localisation.getStr("TRY_AGAIN"), // title
+			            Localisation.getStr("OK") // buttonName
+			            );
+
+						return;
+			        }
+					else
+					{
+						
+						YACWAApp.HEADER_TITLE = Localisation.getStr("RESULTS");
+			            YACWAApp.SELECTED_CATEGORY_INDEX = null;
+			            PrecApp.goForward("services_list.html");
+					}
+		        }
+		    }
+				
+		    function pageA_gotLocation() {
+	    	    var keywordsA = $("#tfA_A_0").val().split(" ");
+	    	    $('#loaderMsg').html(Localisation.getStr("SEARCHING"));      
+		        YACWAApp.HEADER_TITLE = Localisation.getStr("RESULTS");
+		        YACWAApp.SELECTED_CATEGORY_INDEX = null;
+		        PrecApp.goForward("services_list.html");
+		    }
+
+		    function pageA_errorLocation() {
+		        //alert("could not get location");
+		        PrecAppComponents.closePopOver();
+		    }
+		
+		
+			function pageA_selectedCategory(index)
+			{
+				
+				YACWAApp.SELECTED_CATEGORY_INDEX=index;
+				YACWAApp.HEADER_TITLE=YACWAApp.CATEGORIES_LIST[index].nodeName;
+				YACWAApp.SELECTED_CATEGORY_NODE_ID=YACWAApp.CATEGORIES_LIST[index].nodeId;
+				PrecApp.goForward("services_list.html");
+			}
+
+			//**** END page_A common funcs***//
+			
+
+            // at this stage onDeviceReady has been triggered and docReady has happened
+            function appReady() {
+
+				// load in app wide strings - this will probably always be from a local JSON
+					
+        		   
+    
+                Localisation.init("data/in-app-localisation.json", //  url: URL with localisation  call
+                false, //alreadyHave: true if you have the localisation stored already, false if not
+                false, //forceRefresh: even if you already have, this will force a refresh.
+                true);
+                //inAppFile, false with correct url for remote localisation
+
+                //YACWAApp.collapseNavigation(); // minimises it by default if required   
+		
+            }
+
+            function localisationComplete() {
+                var rightButtonW = 50;
+                var rightButtonH = 50;
+                var headerHeight = 55;
+                // note this is render space, the CSS & PrecApp gives the metric amount
+
+                var leftButtonHitHeight = 30;
+                // because it fights with the sort by filter hit area, it needs to be defined
+
+                if (PrecApp.IS_TABLET) {
+                    PrecApp.setActiveStylesheet("tablet");
+                    rightButtonW = 100;
+                    rightButtonH = 100;
+                    headerHeight = 100;
+                    //130;
+                    leftButtonHitHeight = 70;
+                    
+                }
+
+				YACWAApp.setNavigationWidgetMetrics(); // crucial that this comes after setting the active stylesheet
+
+                //PrecAppComponents.populateRevealMenu(PrecApp.IS_TABLET);
+
+                // Bind the touch event in the dark overlay to hide it
+                PrecAppComponents.bindDarkOverlayTouchMethod(function() {
+                
+                	if (PrecApp.POPOVER_OPEN)
+                		PrecAppComponents.closePopOver();
+                	else
+                    	PrecAppComponents.toggleDarkOverlay(false)
+                });
+
+                // create a header without pushing to stack
+                // Note: PrecApp.loadTopLevelView will load a top level view and it will push its own header title to the stack
+                PrecAppComponents.myHeader({
+                    title : "",
+                    fs : 0.9,
+                    height : headerHeight,
+                    ignoreStack : true, // !important , at this stage we set a blank header title and don't want to push to the stack
+                    icon : null,
+
+                    rightButton : {
+                        show : true,
+                        //background:"#ffff00",
+                        //text:"My Profile",
+                        width : rightButtonW,
+                        height : rightButtonH,
+                        fontsize : 1.1,
+                        extraCss : {
+                            "float" : "left",
+                            "font-size" : "0.5em"
+                        }
+                      
+                    },
+                    // the left button is our back button
+                    leftButton : {
+                        show : true,
+                        //background:"#00ffff",
+                        //text:"Menu",
+                        width : 100, // hit area
+                        height : leftButtonHitHeight, // hit area
+                        fontsize : 0.8,
+                        color : "#ffffff",
+                        leftButtonIsBack : true,
+                        onClick : function() {
+                            PrecApp.handleClick('PrecApp.goBack()');
+                        }
+                    }
+                });
+
+                PrecAppComponents.bindSwapBackgroundOnTouch();
+                PrecApp.navigateToTopLevelPage(0, true);
+                    document.getElementById("rightButton").addEventListener("touchstart",headerRightButtonPressed);
+                    document.getElementById("rightButton").addEventListener("mouseup",headerRightButtonPressed);
+            }
+
+            // this happens on screen re-orientation
+            function updateLayout() {
+				
+				// crucial to use "opacity" to hide as metrics can go wrong if using "display"
+				// if (!YACWAApp.SHOW_MENU_ITEMS)
+					// $(".subCircle").css({"opacity":0});
+
+                //PrecAppComponents.sizeRevealMenu(true);
+
+				// this sequence resets our toolbar metrics correctly
+                //YACWAApp.settleNavigation(true);
+                //YACWAApp.setNavigationWidgetMetrics();
+
+                // if (YACWAApp.SHOW_MENU_ITEMS)
+                    // YACWAApp.openNavigation();
+                // else
+				// {
+					// YACWAApp.closeNavigation();
+					// var t = setTimeout(showSubCircles, 500);
+				// }
+                
+				// the About page
+				if (PrecApp.BASE_PAGE_ID=="C")
+				{
+					setAboutBottomPaddingHeight();
+				}
+				else
+				{
+					if (PrecApp.IS_TABLET)
+					{
+						var currentHTMLPageName = PrecApp.getCurrentHTMLPageName();
+						
+						if (currentHTMLPageName=="single_service.html")
+							updateSingleServiceTabletLayoutMetrics();
+					}
+						
+				}
+				
+				PrecApp.refreshIScroll();
+            }
+
+			function setAboutBottomPaddingHeight()
+			{
+				$("#aboutBottomPadding").css({"height":PrecApp.AVAILABLE_SCROLL_H*0.25});
+				
+				// also if we want to set a min height for the panel we can ...
+				//$("#fullPageAboutPanel").css({"min-height":PrecApp.AVAILABLE_SCROLL_H-80});
+			}
+
+
+			function showSubCircles()
+			{
+				$(".subCircle").css({"opacity":1});
+			}
+
+            function onPageBackComplete() {
+
+            }
+
+			function updateSingleServiceTabletLayoutMetrics()
+			{
+				
+				var h_left = $("#tabletLeftSideA").height();
+				var h_right = $("#tabletRightSideA").height();
+				
+				
+				if (h_right>h_left)
+				{
+					$("#tabletLeftSideA").height(h_right);
+					PrecApp.refreshIScroll();
+				}
+				
+				h_left = $("#tabletLeftSideB").height();
+				h_right = $("#tabletRightSideB").height();
+				
+				
+				if (h_right>h_left)
+				{
+					$("#tabletLeftSideB").height(h_right);
+					PrecApp.refreshIScroll();
+				}
+			}
+			
+			
+			// required for iOS 7
+			function keyBoardShowEvent(keyboardShowing)
+			{
+				if (keyboardShowing)
+				{
+					
+			
+				}
+				else
+				{
+					showNavigationWidget(true);//show this again
+				}
+				
+				
+			}
+			
+			function showNavigationWidget(show)
+			{
+				if (show)
+				{
+					$("#centreNavgCircle").css({"display":"block"});
+					$("#subCircleContainer").css({"display":"block"});
+				}
+				else
+				{
+					$("#centreNavgCircle").css({"display":"none"});
+					$("#subCircleContainer").css({"display":"none"});
+				}
+				
+				
+			}
+
+            
+        </script>
+       </head>
+        <body>
+
+            <div id='pageBody'>
+
+                <div id="darkOverlay"></div>
+                <div id="header">
+					<div class="bg"></div>
+                    <!-- your header html here -->
+					<!--
+                    <div class="drop_down_container" ></div>
+                    <div id="headerImg" style></div>
+					-->
+                    <div id="headerTitle" class="ellipsis"></div>
+                    <div class="right" id='rightButton' ></div>
+
+                    <div class="left back"></div>
+                    <!-- stop header html here -->
+                </div>
+				<!--
+                <div class="headerDropDown">
+        
+                    <div id='scrollRevealMenu'>
+                        <div id="revealMenu"></div>
+                    </div>
+
+                </div>
+				-->
+                <div class="pageBG"></div>
+
+                <div id="loaderHolder" style="position:relative;width:320px;height:210px;opacity:0;margin:0 auto; text-align:center;">
+                    <div class="loader" style="width:100%;">
+                    	<img src="images/loaders/P.png" height=126 id="loaderP"/>
+                    	<img src="images/loaders/L.png" height=126 id="loaderL"/>
+                    	<img src="images/loaders/I.png" height=126 id="loaderI"/>
+                    	<img src="images/loaders/N.png" height=126 id="loaderN"/>
+                    	<img src="images/loaders/G.png" height=126 id="loaderG"/>
+                    </div>
+                    <div class="colorC" style="text-align:center;width:100%;height:50px;line-height:50px;" id='progressText'>
+                        Finding services ...
+                    </div>
+					<div style="width:200px;height:20px;max-width:200;margin:0 auto;background:transparent;border:#c0c0c0 1px solid;margin-top:10px;"><div id="loaderBar" style="width:0px;height:16px;margin-top:1px;margin-left:1px;background:#fff;"></div></div>
+                </div>
+
+                <div id='tabletMenuView'></div>
+
+                <!--
+                Don't remove or rename this div
+                -->
+
+				<!-- filter widget -->
+				<div id="filterWidget">
+					<div class="bg"></div>
+					<div  id="filterCircle"></div>
+					<div  class='listFilter selected' id="filterSubCircleA"></div>
+					<div  class='listFilter' id="filterSubCircleB"></div>
+					<div  class='listFilter' id="filterSubCircleC"></div>
+
+				</div>
+				
+
+                <div id='drillDowns'>
+
+                    <div id="drillDownHolder">
+
+                    </div>
+
+                    <div id="ui_scroll_view_0" class="iScrollWrapper">
+                        <div class="ui_scroll_view" id="topLevelBasePageHolder">
+
+                            <!-- START going wild here with your required HTML -->
+
+                            <div class="full_wrap" id="PrecAppBasePageContent_0">
+
+                            </div>
+                            <!-- STOP going wild here with your required HTML :) -->
+
+                        </div>
+                        <!--close ui_scroll_view -->
+
+                    </div>
+                    <!--close iScrollWrapper -->
+
+                </div>
+                <!-- close drillDowns-->
+
+            </div>
+            <!--close pageBody -->
+
+            <!-- specialist "toolbar" -->
+            <div id="toolbar"  style="opacity:0;">
+                
+
+
+                        <img src="images/toolbar/toolbar-menu-button.png" id="centreNavgCircle"/>                  
+               
+
+
+            </div>
+            <div id='subCircleContainer' class='visible'>
+	     		<div class="subCircle visible" id="navgCircleA"  style="opacity:0;">
+	                <img src="images/toolbar/toolbar-item-a.png"/>
+	            </div>
+	
+	            <div class="subCircle visible" id="navgCircleB" style="opacity:0;" >
+	                <img src="images/toolbar/toolbar-item-b.png"/>
+	            </div>
+	
+	            <div class="subCircle visible" id="navgCircleC"  style="opacity:0;">
+	                <img src="images/toolbar/toolbar-item-c.png"/>
+	        	</div>
+    		</div>
+
+            <!-- close toolbar -->
+
+            <div id="popOver">
+                <div id="popOverBG" onClick="javaScript:PrecApp.handleClick('PrecAppComponents.closePopOver()')"></div>
+                <div id="popOverPanel">
+                    <!-- render pop over content in here -->
+                    <div class="full_wrap" id="popOverContent">
+
+                    </div>
+
+                    <a href="javaScript:PrecApp.handleClick('PrecAppComponents.closePopOver()')"> <div id="popOverClose"></div> </a>
+                </div>
+            </div>
+
+			<div id="IMAGE_CACHE" style="display:none;">
+				
+			</div>
+
+        </body>
+
+</html>
