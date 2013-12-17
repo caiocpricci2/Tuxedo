@@ -28,9 +28,9 @@ body{
 	-webkit-user-select:none;
 	-webkit-text-size-adjust:none;
 	background-color:#333;
-	font-family:"Futura W01 Medium";
+
 	color:#762c83; /* the purple */
-	background:url("../images/background/tile-purple.png") repeat;	
+
 	background-size:auto 12px;
 }
 

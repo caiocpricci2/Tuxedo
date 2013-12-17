@@ -18,19 +18,42 @@
         <script type="text/javascript" src="js/iscroll-5.0.8.js"></script>
         <script type="text/javascript" src="js/jquery.transit-0.9.9.min.js"></script>
         
+        <script type="text/javascript" src="js/tuxedo.page.js"></script>	
 		<script type="text/javascript" src="js/tuxedo.localisation.js"></script>				
-        <script type="text/javascript" src="js/tuxedo.js"></script>
-		<script type="text/javascript" src="js/tuxedo.components.js"></script>
+        <script type="text/javascript" src="js/tuxedo-0.0.1.js"></script>
+		<script type="text/javascript" src="js/tuxedo.components-0.0.1.js"></script>
 		
 
         <!-- ****** LOAD YOUR APP SPECIFIC JS HERE  ***** -->
         <script type="text/javascript" src="js/app.js"></script>	        
-	
+		
+		
+
 	</head>
 		<body>
 			<div id="tux_mainContainer">
 			
-			</div>	
+			</div>
+			
+					
+		<script>
+			var tuxedo;
+			$( document ).ready(function() {
+ 
+			    tuxedo = new TuxedoCore();
+				tuxedo.init({
+					
+					onInitComplete : initComplete
+				});
+			 
+			});
+			
+			function initComplete(){
+				tuxedo.loadTopLevelView("home.html");
+				
+			}
+			
+		</script>	
         </body>
 
 </html>
